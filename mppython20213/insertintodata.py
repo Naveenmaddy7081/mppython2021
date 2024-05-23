@@ -1,0 +1,31 @@
+from tkinter import *
+import pymysql
+root=Tk()
+width=root.winfo_screenwidth()
+height=root.winfo_screenheight()
+print(width,height)
+conn=pymysql.connect(host="localhost",user="root",db="mppython")
+mycursor=conn.cursor()
+def insert_data():
+    name1=i.get()
+    age1=j.get()
+    print(name1,age1)
+    que = "insert into user_info(name,age)values(%s,%s)"
+    val=(name1,age1)
+    mycursor.execute(que,val)
+    conn.commit()
+    print("Data stored Successfully")
+    i.set('')
+    j.set('')
+i=StringVar()
+txt1=Entry(root,font=("Comic Sans Ms",20,'bold'),textvariable=i)
+txt1.pack()
+j=StringVar()
+txt2=Entry(root,font=("Comic Sans Ms",20,'bold'),textvariable=j)
+txt2.pack()
+btn=Button(root,text="Insert",fg="blue",bg="yellow",
+           font=("Comic Sans Ms",20,'bold'),command=insert_data)
+btn.pack()
+#root.geometry("400x400+300+150")
+root.geometry("%dx%d+0+0"%(width,height))
+root.mainloop()
